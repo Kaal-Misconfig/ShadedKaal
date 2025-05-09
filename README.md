@@ -51,7 +51,7 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/shadedkaal.git
+git clone https://github.com/kaal-misconfig/shadedkaal.git
 
 # Navigate to the directory
 cd shadedkaal
@@ -61,7 +61,7 @@ chmod +x install.sh
 ./install.sh
 
 # Start ShadedKaal
-./shadedkaal.sh
+sudo bash shadedkaal-tool-fixed.sh
 ```
 
 The installer automatically sets up all required dependencies including `nmap`, `curl`, `python3`, and other necessary tools.
@@ -72,7 +72,7 @@ The installer automatically sets up all required dependencies including `nmap`, 
 Launch ShadedKaal to access the main menu:
 
 ```
-bash shadedkaal-tool-fixed.sh
+sudo bash shadedkaal-tool-fixed.sh
 ```
 
 ### Network Reconnaissance Module
