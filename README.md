@@ -50,7 +50,7 @@
 
 ```bash
 git clone https://github.com/kaal-misconfig/shadedkaal.git
-cd shadedkaal
+cd ShadedKaal
 sudo bash shadedkaal-install.sh
 sudo bash shadedkaal-tool-fixed.sh
 ```
@@ -72,9 +72,6 @@ Discover hosts, open ports, and services with advanced fingerprinting:
 ```bash
 # From main menu
 > Select option 1
-
-# Or direct command
-./shadedkaal.sh --recon -t 192.168.1.0/24 --intensity medium
 ```
 
 ### Subdomain Takeover Scanner
@@ -83,9 +80,6 @@ Identify vulnerable subdomains susceptible to takeover:
 ```bash
 # From main menu
 > Select option 2
-
-# Or direct command
-./shadedkaal.sh --takeover -d example.com --threads 10
 ```
 
 ### CVE Exploitation Framework
@@ -94,9 +88,6 @@ Test systems for known vulnerabilities with built-in proof-of-concept exploits:
 ```bash
 # From main menu
 > Select option 3
-
-# Or direct command
-./shadedkaal.sh --exploit -t 192.168.1.10 --cve CVE-2021-44228
 ```
 
 ## 🔧 Advanced Configuration
@@ -105,7 +96,8 @@ ShadedKaal allows deep customization through its configuration file:
 
 ```bash
 # Edit the configuration file
-nano ~/.config/shadedkaal/config.yml
+cd ShadedKaal
+nano shadedkaal-tool-fixed.sh
 ```
 
 Key configuration options:
