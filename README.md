@@ -49,17 +49,13 @@
 ## 🛠️ Installation
 
 ```bash
-# Clone the repository
 git clone https://github.com/kaal-misconfig/shadedkaal.git
 
-# Navigate to the directory
 cd shadedkaal
 
-# Run the installer script
 chmod +x install.sh
 ./install.sh
 
-# Start ShadedKaal
 sudo bash shadedkaal-tool-fixed.sh
 ```
 
