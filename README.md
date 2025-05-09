@@ -153,11 +153,6 @@ function cleanup() {
     echo "[+] Cleaning up resources"
 }
 
-# Module metadata
-MODULE_NAME="Custom Scanner"
-MODULE_DESCRIPTION="Advanced custom scanning techniques"
-MODULE_AUTHOR="Your Name"
-MODULE_VERSION="1.0"
 ```
 
 ## ⚠️ Legal Disclaimer
