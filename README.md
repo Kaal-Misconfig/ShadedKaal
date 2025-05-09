@@ -129,10 +129,6 @@ ShadedKaal is designed to be easily extendable. Create your own offensive module
 
 Example module template:
 ```bash
-#!/bin/bash
-# Module: custom_scan
-# Description: Custom scanning module
-
 function init() {
     # Setup code
     echo "[+] Initializing custom scan module"
