@@ -24,13 +24,12 @@
 
 ## ⚡ Features
 
-- **Terminal-based Interface**: Fully command-line driven with an elegant, color-coded ASCII UI
-- **Advanced Reconnaissance**: Discover hidden assets and map attack surfaces with intelligent scanning techniques
-- **Subdomain Takeover Detection**: Identify vulnerable subdomains ripe for takeover with high precision
-- **CVE Exploitation Framework**: Test systems against common vulnerabilities with built-in POC triggers
-- **Modular Architecture**: Easily extend functionality with custom modules
-- **Stealth Mode**: Configurable low-footprint operations to avoid detection
-- **Seamless Workflow**: Intuitive interface for rapid operation switching and data correlation
+- **Advanced Reconnaissance**
+- **Subdomain Takeover Detection**
+- **CVE Exploitation Framework**
+- **Modular Architecture**
+- **Stealth Mode**
+- **Seamless Workflow**
 
 ## 📸 Screenshots
 
