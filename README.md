@@ -71,8 +71,8 @@ The installer automatically sets up all required dependencies including `nmap`, 
 ### Main Menu
 Launch ShadedKaal to access the main menu:
 
-```bash
-./shadedkaal.sh
+```
+bash shadedkaal-tool-fixed.sh
 ```
 
 ### Network Reconnaissance Module
@@ -176,19 +176,9 @@ ShadedKaal is provided for educational and professional security assessment purp
 
 Contributions are what make the open-source community an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`) 
-5. Open a Pull Request
-
-## 📜 License
-
-Distributed under the GPL-3.0 License. See `LICENSE` for more information.
-
 ## 🌟 Author
 
-Created with ☕ and 💻 by [Your Name]
+Created with ☕ and 💻 by Kaal-Misconfig
 
-[![Twitter](https://img.shields.io/badge/-Twitter-1DA1F2?style=flat-square&logo=twitter&logoColor=white)](https://twitter.com/yourusername)
-[![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/yourusername)
+[![Twitter](https://img.shields.io/badge/-Twitter-1DA1F2?style=flat-square&logo=twitter&logoColor=white)](https://x.com/kaalmisconfig)
+[![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/kaal-misconfig)
