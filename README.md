@@ -38,7 +38,7 @@
   <table>
     <tr>
       <td><img src="/api/placeholder/400/280" alt="ShadedKaal Main Menu"/></td>
-      <td><img src="/api/placeholder/400/280" alt="Network Recon Module"/></td>
+      <td><img src="https://github.com/Kaal-Misconfig/ShadedKaal/blob/main/Screenshot%202025-05-09%20180250.png?raw=true" alt="Network Recon Module"/></td>
     </tr>
     <tr>
       <td><em>Main Interface</em></td>
