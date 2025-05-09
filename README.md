@@ -50,12 +50,8 @@
 
 ```bash
 git clone https://github.com/kaal-misconfig/shadedkaal.git
-
 cd shadedkaal
-
-chmod +x install.sh
-./install.sh
-
+sudo bash shadedkaal-install.sh
 sudo bash shadedkaal-tool-fixed.sh
 ```
 
