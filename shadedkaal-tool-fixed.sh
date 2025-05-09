@@ -1,12 +1,6 @@
 #!/bin/bash
 
-# ------------------------------------------------
-# ShadedKaal - Advanced Offensive Security Tool
-# Author: Claude
-# Version: 1.0.0
-# ------------------------------------------------
 
-# ANSI color codes
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
@@ -15,19 +9,16 @@ PURPLE='\033[0;35m'
 NC='\033[0m' # No Color
 BOLD='\033[1m'
 
-# Config directory
 CONFIG_DIR="$HOME/.shadedkaal"
 LOGS_DIR="$CONFIG_DIR/logs"
 RESULTS_DIR="$CONFIG_DIR/results"
 
-# Check if directories exist, create if needed
 if [ ! -d "$CONFIG_DIR" ]; then
     mkdir -p "$CONFIG_DIR"
     mkdir -p "$LOGS_DIR"
     mkdir -p "$RESULTS_DIR"
 fi
 
-# Function to display banner
 display_banner() {
     clear
     echo -e "${RED}"
@@ -45,7 +36,6 @@ EOF
     echo
 }
 
-# Function to check required tools
 check_requirements() {
     local missing_tools=()
     local required_tools=("nmap" "curl" "python3" "gobuster" "whatweb")
@@ -66,7 +56,6 @@ check_requirements() {
     echo -e "${GREEN}[+] All required tools are installed${NC}"
 }
 
-# Function to display main menu
 display_menu() {
     echo -e "\n${BOLD}${PURPLE}=== MAIN MENU ===${NC}"
     echo -e "${YELLOW}[1]${NC} Advanced Network Reconnaissance"
@@ -85,7 +74,6 @@ display_menu() {
     esac
 }
 
-# Function for Network Reconnaissance
 network_recon_menu() {
     display_banner
     echo -e "${BOLD}${PURPLE}=== NETWORK RECONNAISSANCE MODULE ===${NC}"
@@ -107,7 +95,6 @@ network_recon_menu() {
     esac
 }
 
-# Network reconnaissance functions
 quick_network_scan() {
     display_banner
     echo -e "${BOLD}${PURPLE}=== QUICK NETWORK SCAN ===${NC}"
@@ -213,7 +200,6 @@ os_detection() {
     network_recon_menu
 }
 
-# Subdomain Takeover Module
 subdomain_takeover_menu() {
     display_banner
     echo -e "${BOLD}${PURPLE}=== SUBDOMAIN TAKEOVER MODULE ===${NC}"
@@ -233,7 +219,6 @@ subdomain_takeover_menu() {
     esac
 }
 
-# Subdomain takeover functions
 subdomain_enumeration() {
     display_banner
     echo -e "${BOLD}${PURPLE}=== SUBDOMAIN ENUMERATION ===${NC}"
@@ -250,21 +235,16 @@ subdomain_enumeration() {
     timestamp=$(date +%Y%m%d_%H%M%S)
     output_file="$RESULTS_DIR/subdomains_${domain}_${timestamp}.txt"
     
-    # Using multiple techniques for comprehensive enumeration
     echo -e "${BLUE}[*] Using multiple techniques for thorough enumeration...${NC}"
     
-    # Method 1: Using gobuster dns
     echo -e "${YELLOW}[*] Running gobuster DNS enumeration...${NC}"
     gobuster dns -d "$domain" -w /usr/share/wordlists/dirb/common.txt -q | grep -oE "[a-zA-Z0-9._-]+\.$domain" | sort -u > "$output_file"
     
-    # Method 2: Using curl with Hackertarget API
     echo -e "${YELLOW}[*] Querying Hackertarget API...${NC}"
     curl -s "https://api.hackertarget.com/hostsearch/?q=$domain" | cut -d ',' -f1 | sort -u >> "$output_file"
     
-    # Remove duplicates
     sort -u "$output_file" -o "$output_file"
     
-    # Count discovered subdomains
     subdomain_count=$(wc -l < "$output_file")
     
     echo -e "${GREEN}[+] Enumeration completed! Found $subdomain_count subdomains${NC}"
@@ -308,7 +288,6 @@ takeover_vulnerability_check() {
     output_file="$RESULTS_DIR/takeover_check_${timestamp}.txt"
     echo -e "${YELLOW}[*] Checking for takeover vulnerabilities...${NC}"
     
-    # Check each subdomain for common takeover indicators
     echo -e "${BLUE}[*] This may take some time depending on the number of subdomains...${NC}"
     
     echo "=== SUBDOMAIN TAKEOVER VULNERABILITY REPORT ===" > "$output_file"
@@ -320,10 +299,8 @@ takeover_vulnerability_check() {
         echo -e "${YELLOW}[*] Checking: $subdomain ${NC}"
         echo "Checking: $subdomain" >> "$output_file"
         
-        # Get HTTP response
         response=$(curl -s -I "http://$subdomain")
         
-        # Check for common takeover indicators
         if echo "$response" | grep -q "404"; then
             if curl -s "http://$subdomain" | grep -qi -E "heroku|github|bitbucket|shopify|fastly|amazonaws|azure|cloudfront"; then
                 echo -e "${RED}[!] VULNERABLE: $subdomain ${NC}"
@@ -370,11 +347,9 @@ subdomain_comprehensive_report() {
     echo -e "${YELLOW}[*] Generating comprehensive report for $domain...${NC}"
     echo -e "${BLUE}[*] This will take some time. Please be patient...${NC}"
     
-    # Step 1: Subdomain enumeration
     echo -e "${YELLOW}[*] Step 1/3: Subdomain enumeration${NC}"
     curl -s "https://api.hackertarget.com/hostsearch/?q=$domain" | cut -d ',' -f1 | sort -u > "$temp_file"
     
-    # Step 2: Generate HTML report header
     echo -e "${YELLOW}[*] Step 2/3: Creating report structure${NC}"
     cat > "$report_file" << EOF
 <!DOCTYPE html>
@@ -415,7 +390,6 @@ subdomain_comprehensive_report() {
             </tr>
 EOF
     
-    # Step 3: Analyze each subdomain and add to report
     echo -e "${YELLOW}[*] Step 3/3: Analyzing subdomains and generating report...${NC}"
     subdomain_count=$(wc -l < "$temp_file")
     current=0
@@ -424,7 +398,6 @@ EOF
         current=$((current + 1))
         echo -e "${YELLOW}[*] Processing $current/$subdomain_count: $subdomain${NC}"
         
-        # Get IP address
         ip=$(dig +short "$subdomain" | head -n 1)
         if [ -z "$ip" ]; then
             ip="Not resolved"
@@ -432,13 +405,10 @@ EOF
             server="N/A"
             risk="<span class=\"vulnerable\">High</span>"
         else
-            # Check HTTP status
             status=$(curl -s -o /dev/null -w "%{http_code}" "http://$subdomain" || echo "Connection Failed")
             
-            # Get server info
             server=$(curl -s -I "http://$subdomain" | grep -i "Server:" | awk '{print $2}' || echo "Unknown")
             
-            # Determine risk level
             if [ "$status" = "404" ] || [ "$status" = "Connection Failed" ]; then
                 risk="<span class=\"warning\">Medium</span>"
             elif curl -s "http://$subdomain" | grep -qi -E "heroku|github|bitbucket|shopify|fastly|amazonaws|azure|cloudfront"; then
@@ -448,7 +418,6 @@ EOF
             fi
         fi
         
-        # Add to report
         cat >> "$report_file" << EOF
             <tr>
                 <td>$subdomain</td>
@@ -460,7 +429,6 @@ EOF
 EOF
     done < "$temp_file"
     
-    # Finalize HTML report
     cat >> "$report_file" << EOF
         </table>
         
@@ -479,7 +447,6 @@ EOF
     subdomain_takeover_menu
 }
 
-# CVE Exploitation Module
 cve_exploitation_menu() {
     display_banner
     echo -e "${BOLD}${PURPLE}=== CVE EXPLOITATION FRAMEWORK ===${NC}"
@@ -499,7 +466,6 @@ cve_exploitation_menu() {
     esac
 }
 
-# CVE exploitation functions
 cve_vulnerability_scanner() {
     display_banner
     echo -e "${BOLD}${PURPLE}=== CVE VULNERABILITY SCANNER ===${NC}"
@@ -516,7 +482,6 @@ cve_vulnerability_scanner() {
     timestamp=$(date +%Y%m%d_%H%M%S)
     output_file="$RESULTS_DIR/cve_scan_${timestamp}.txt"
     
-    # Execute the scan using nmap's vuln scripts
     echo -e "${BLUE}[*] Running nmap vulnerability detection scripts...${NC}"
     nmap -sV --script vuln "$target" | tee "$output_file"
     
@@ -798,7 +763,6 @@ create_python_exploit() {
         return
     fi
     
-    # Sanitize exploit name for file naming
     sanitized_name=$(echo "$exploit_name" | tr ' ' '_' | tr -cd 'a-zA-Z0-9_-')
     
     timestamp=$(date +%Y%m%d_%H%M%S)
@@ -807,14 +771,7 @@ create_python_exploit() {
     echo -e "${YELLOW}[*] Generating Python exploit template...${NC}"
     
     cat > "$exploit_file" << EOF
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
-"""
-ShadedKaal - Custom Exploit: $exploit_name
-Generated on: $(date)
-Target type: $target_type
-"""
 
 import argparse
 import requests
@@ -823,7 +780,6 @@ import socket
 import time
 from colorama import Fore, Style, init
 
-# Initialize colorama
 init()
 
 class Exploit:
@@ -929,7 +885,6 @@ create_bash_exploit() {
         return
     fi
     
-    # Sanitize exploit name for file naming
     sanitized_name=$(echo "$exploit_name" | tr ' ' '_' | tr -cd 'a-zA-Z0-9_-')
     
     timestamp=$(date +%Y%m%d_%H%M%S)
@@ -938,20 +893,13 @@ create_bash_exploit() {
     echo -e "${YELLOW}[*] Generating Bash exploit template...${NC}"
     
     cat > "$exploit_file" << EOF
-#!/bin/bash
 
-# ShadedKaal - Custom Exploit: $exploit_name
-# Generated on: $(date)
-# Target type: $target_type
-
-# ANSI color codes
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 BLUE='\033[0;36m'
 NC='\033[0m' # No Color
 
-# Usage information
 usage() {
     echo -e "${BLUE}Usage:${NC} $0 -t <target> [-p <port>] [-v]"
     echo -e "  -t, --target  Target IP or hostname"
@@ -961,7 +909,6 @@ usage() {
     exit 1
 }
 
-# Parse command line arguments
 VERBOSE=false
 PORT=80
 
@@ -989,18 +936,15 @@ while [[ \$# -gt 0 ]]; do
     esac
 done
 
-# Check if target is provided
 if [ -z "\$TARGET" ]; then
     echo -e "${RED}Error: Target is required${NC}"
     usage
 fi
 
-# Banner
 echo -e "${RED}===============================================================${NC}"
 echo -e "${RED}ShadedKaal - $exploit_name${NC}"
 echo -e "${RED}===============================================================${NC}"
 
-# Log function
 log() {
     local level="\$1"
     local message="\$2"
@@ -1021,7 +965,6 @@ log() {
     esac
 }
 
-# Check if target is vulnerable
 check_vulnerability() {
     log "info" "Checking if \$TARGET is vulnerable..."
     
@@ -1033,7 +976,6 @@ check_vulnerability() {
     return 0
 }
 
-# Exploit function
 exploit() {
     log "warning" "Exploiting \$TARGET:\$PORT..."
     
@@ -1052,17 +994,14 @@ exploit() {
     log "info" "Checking for successful exploitation..."
     sleep 1
     
-    # Simulating successful exploitation
     log "success" "Exploit completed successfully!"
     return 0
 }
 
-# Main execution
 exploit
 exit \$?
 EOF
     
-    # Make the script executable
     chmod +x "$exploit_file"
     
     echo -e "${GREEN}[+] Bash exploit template generated!${NC}"
@@ -1090,10 +1029,8 @@ import_external_exploit() {
     
     echo -e "${YELLOW}[*] Importing exploit...${NC}"
     
-    # Copy the file to the results directory
     cp "$exploit_path" "$new_path"
     
-    # Make it executable if it's a script
     if [[ "$filename" == *.sh ]] || [[ "$filename" == *.py ]]; then
         chmod +x "$new_path"
     fi
@@ -1105,7 +1042,6 @@ import_external_exploit() {
     custom_exploit_development
 }
 
-# Function to exit program
 exit_program() {
     display_banner
     echo -e "${GREEN}Thank you for using ShadedKaal!${NC}"
@@ -1114,7 +1050,6 @@ exit_program() {
     exit 0
 }
 
-# Main function
 main() {
     # Check if running as root
     if [ "$EUID" -ne 0 ] && [ "$1" != "--no-root-check" ]; then
@@ -1123,18 +1058,14 @@ main() {
         exit 1
     fi
     
-    # Create required directories
     mkdir -p "$CONFIG_DIR"
     mkdir -p "$LOGS_DIR"
     mkdir -p "$RESULTS_DIR"
     
-    # Display banner and check requirements
     display_banner
     check_requirements
     
-    # Display main menu
     display_menu
 }
 
-# Execute main function with all arguments
 main "$@"
