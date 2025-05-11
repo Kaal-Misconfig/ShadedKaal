@@ -6,7 +6,7 @@ GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 BLUE='\033[0;36m'
 PURPLE='\033[0;35m'
-NC='\033[0m' # No Color
+NC='\033[0m' 
 BOLD='\033[1m'
 
 CONFIG_DIR="$HOME/.shadedkaal"
@@ -111,7 +111,6 @@ quick_network_scan() {
     timestamp=$(date +%Y%m%d_%H%M%S)
     output_file="$RESULTS_DIR/quick_scan_${timestamp}.txt"
     
-    # Execute the scan
     nmap -sn "$target" | tee "$output_file"
     
     echo -e "${GREEN}[+] Scan completed!${NC}"
@@ -138,7 +137,6 @@ comprehensive_port_scan() {
     timestamp=$(date +%Y%m%d_%H%M%S)
     output_file="$RESULTS_DIR/port_scan_${timestamp}.txt"
     
-    # Execute the scan
     nmap -p- -sS -sV --reason "$target" | tee "$output_file"
     
     echo -e "${GREEN}[+] Scan completed!${NC}"
@@ -164,7 +162,6 @@ service_fingerprinting() {
     timestamp=$(date +%Y%m%d_%H%M%S)
     output_file="$RESULTS_DIR/service_scan_${timestamp}.txt"
     
-    # Execute the scan
     nmap -sV -sC "$target" | tee "$output_file"
     
     echo -e "${GREEN}[+] Scan completed!${NC}"
