@@ -6,7 +6,7 @@ GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 BLUE='\033[0;36m'
 PURPLE='\033[0;35m'
-NC='\033[0m' # No Color
+NC='\033[0m'
 BOLD='\033[1m'
 
 echo -e "${RED}"
@@ -46,7 +46,6 @@ install_packages() {
         echo -e "${YELLOW}[*] Installing required packages...${NC}"
         apt install -y nmap curl python3 python3-pip gobuster whatweb git libssl-dev libffi-dev libpcap-dev dnsutils whois
         
-        # Install Python packages
         echo -e "${YELLOW}[*] Installing Python packages...${NC}"
         pip3 install requests colorama dnspython tqdm
         
@@ -168,10 +167,8 @@ install_additional_tools() {
 create_symlink() {
     echo -e "${YELLOW}[*] Creating system-wide command...${NC}"
     
-    # Get the current directory
     CURRENT_DIR=$(pwd)
     
-    # Create symlink in /usr/local/bin
     ln -sf "$CURRENT_DIR/shadedkaal.sh" /usr/local/bin/shadedkaal
     
     echo -e "${GREEN}[+] ShadedKaal is now available system-wide${NC}"
