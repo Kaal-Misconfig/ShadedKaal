@@ -187,7 +187,6 @@ os_detection() {
     timestamp=$(date +%Y%m%d_%H%M%S)
     output_file="$RESULTS_DIR/os_detection_${timestamp}.txt"
     
-    # Execute the scan
     sudo nmap -O --osscan-guess "$target" | tee "$output_file"
     
     echo -e "${GREEN}[+] Scan completed!${NC}"
@@ -265,13 +264,10 @@ takeover_vulnerability_check() {
     
     timestamp=$(date +%Y%m%d_%H%M%S)
     
-    # Check if input is a file or domain
     if [ -f "$input" ]; then
-        # Use provided file
         subdomains_file="$input"
         echo -e "${YELLOW}[*] Using provided file: $subdomains_file${NC}"
     else
-        # Treat as domain and perform quick enumeration
         domain="$input"
         subdomains_file="$RESULTS_DIR/subdomains_${domain}_${timestamp}.txt"
         echo -e "${YELLOW}[*] Performing quick subdomain enumeration for $domain...${NC}"
@@ -493,7 +489,6 @@ poc_exploit_launcher() {
     display_banner
     echo -e "${BOLD}${PURPLE}=== POC EXPLOIT LAUNCHER ===${NC}"
     
-    # Display available exploits
     echo -e "${YELLOW}Available Exploits:${NC}"
     echo -e "${BLUE}[1]${NC} Log4j RCE (CVE-2021-44228)"
     echo -e "${BLUE}[2]${NC} ProxyShell Exchange (CVE-2021-34473)"
@@ -859,7 +854,6 @@ if __name__ == "__main__":
     main()
 EOF
     
-    # Make the script executable
     chmod +x "$exploit_file"
     
     echo -e "${GREEN}[+] Python exploit template generated!${NC}"
@@ -1048,7 +1042,6 @@ exit_program() {
 }
 
 main() {
-    # Check if running as root
     if [ "$EUID" -ne 0 ] && [ "$1" != "--no-root-check" ]; then
         echo -e "${RED}[!] ShadedKaal should be run as root for full functionality${NC}"
         echo -e "${YELLOW}[*] You can bypass this check with: $0 --no-root-check${NC}"
